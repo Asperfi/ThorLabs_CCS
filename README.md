@@ -46,6 +46,16 @@ You can set up a workaround to acquire on an external pulse train. As the high-t
 ## Example VI
 In the Example folder of the project, the routine named `Thorlabs_CCS_Test_Panel.vi` is a ready-to-use test panel VI to acquire and visualize spectra from the Thorlabs CCS instrument.
 
+## Create an executable
+Under the hat the Thorlabs CCS driver for LabVIEW uses the DLL `TLCCS_32.dll` (LabVIEW 32bit on 64bit OS). To create a Labview executable that can be run without installing the CCS Thorlabs driver separately, the DLL itself must be included in the executable build.
+
+Thorlabs's CCS driver makes a dynamic call to the DLL, so the DLL must be added manually to the Build specification. To manually add the DLL in the properties of build specifications follow the points:
+ 1. Panel "Source Files", the DLL `TLCCS_32.dll` have to be add to the "Always Included".
+ 2. Panel "Destinations", add, as destination, the directory from which the executable is running from.
+ 3. Panel "Source File Settings", select `TLCCCS_32.dll` from the project files and specify the previously created directory as a destination.
+
+The installation of DLL `TLCCS_32.dll` in the directory from which the executable is running from, prevents LabVIEW looking for the DLL every time the executable is runned (see [Executable Cannot Find My DLL Even With A Specified Path](https://knowledge.ni.com/KnowledgeArticleDetails?id=kA00Z000000P81wSAC).
+
 ## Requirements
 
 ### Hardware
